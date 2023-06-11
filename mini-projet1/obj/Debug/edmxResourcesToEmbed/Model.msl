@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="miniprojetModelStoreContainer" CdmEntityContainer="mp">
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="miniprojetModel.Categorie">
+        <MappingFragment StoreEntitySet="Categorie">
+          <ScalarProperty Name="id_cat" ColumnName="id_cat" />
+          <ScalarProperty Name="libelle" ColumnName="libelle" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="miniprojetModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="id_client" ColumnName="id_client" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="adresse" ColumnName="adresse" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Commandes">
+      <EntityTypeMapping TypeName="miniprojetModel.Commande">
+        <MappingFragment StoreEntitySet="Commande">
+          <ScalarProperty Name="id_cmd" ColumnName="id_cmd" />
+          <ScalarProperty Name="date_cmd" ColumnName="date_cmd" />
+          <ScalarProperty Name="id_client" ColumnName="id_client" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produits">
+      <EntityTypeMapping TypeName="miniprojetModel.Produit">
+        <MappingFragment StoreEntitySet="Produit">
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="libelle" ColumnName="libelle" />
+          <ScalarProperty Name="qte" ColumnName="qte" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="id_cat" ColumnName="id_cat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Utilisateurs">
+      <EntityTypeMapping TypeName="miniprojetModel.Utilisateur">
+        <MappingFragment StoreEntitySet="Utilisateur">
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="mdp" ColumnName="mdp" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ligne_cmd">
+      <EntityTypeMapping TypeName="miniprojetModel.Ligne_cmd">
+        <MappingFragment StoreEntitySet="Ligne_cmd">
+          <ScalarProperty Name="id_cmd" ColumnName="id_cmd" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="qte" ColumnName="qte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

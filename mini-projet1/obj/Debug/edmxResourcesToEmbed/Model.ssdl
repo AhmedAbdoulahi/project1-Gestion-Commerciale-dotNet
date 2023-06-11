@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="miniprojetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Categorie">
+    <Key>
+      <PropertyRef Name="id_cat" />
+    </Key>
+    <Property Name="id_cat" Type="int" Nullable="false" />
+    <Property Name="libelle" Type="nvarchar" MaxLength="50" />
+    <Property Name="description" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="id_client" />
+    </Key>
+    <Property Name="id_client" Type="int" Nullable="false" />
+    <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="tel" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="adresse" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Commande">
+    <Key>
+      <PropertyRef Name="id_cmd" />
+    </Key>
+    <Property Name="id_cmd" Type="int" Nullable="false" />
+    <Property Name="date_cmd" Type="date" Nullable="false" />
+    <Property Name="id_client" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'miniprojet.dbo.Ligne_cmd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Ligne_cmd">
+    <Key>
+      <PropertyRef Name="id_cmd" />
+      <PropertyRef Name="id_prod" />
+    </Key>
+    <Property Name="id_cmd" Type="int" Nullable="false" />
+    <Property Name="id_prod" Type="int" Nullable="false" />
+    <Property Name="qte" Type="real" />
+  </EntityType>
+  <EntityType Name="Produit">
+    <Key>
+      <PropertyRef Name="id_prod" />
+    </Key>
+    <Property Name="id_prod" Type="int" Nullable="false" />
+    <Property Name="libelle" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="qte" Type="real" Nullable="false" />
+    <Property Name="image" Type="image" Nullable="false" />
+    <Property Name="id_cat" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Utilisateur">
+    <Key>
+      <PropertyRef Name="id_user" />
+    </Key>
+    <Property Name="id_user" Type="int" Nullable="false" />
+    <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="mdp" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="type" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Commande_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="id_client" />
+      </Principal>
+      <Dependent Role="Commande">
+        <PropertyRef Name="id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ligne_cmd_Commande">
+    <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
+    <End Role="Ligne_cmd" Type="Self.Ligne_cmd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Commande">
+        <PropertyRef Name="id_cmd" />
+      </Principal>
+      <Dependent Role="Ligne_cmd">
+        <PropertyRef Name="id_cmd" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ligne_cmd_Produit">
+    <End Role="Produit" Type="Self.Produit" Multiplicity="1" />
+    <End Role="Ligne_cmd" Type="Self.Ligne_cmd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produit">
+        <PropertyRef Name="id_prod" />
+      </Principal>
+      <Dependent Role="Ligne_cmd">
+        <PropertyRef Name="id_prod" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produit_Categorie">
+    <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+    <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="id_cat" />
+      </Principal>
+      <Dependent Role="Produit">
+        <PropertyRef Name="id_cat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="miniprojetModelStoreContainer">
+    <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Commande" EntityType="Self.Commande" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produit" EntityType="Self.Produit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ligne_cmd" EntityType="Self.Ligne_cmd" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Ligne_cmd].[id_cmd] AS [id_cmd], 
+    [Ligne_cmd].[id_prod] AS [id_prod], 
+    [Ligne_cmd].[qte] AS [qte]
+    FROM [dbo].[Ligne_cmd] AS [Ligne_cmd]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Commande_Client" Association="Self.FK_Commande_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Commande" EntitySet="Commande" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ligne_cmd_Commande" Association="Self.FK_Ligne_cmd_Commande">
+      <End Role="Commande" EntitySet="Commande" />
+      <End Role="Ligne_cmd" EntitySet="Ligne_cmd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ligne_cmd_Produit" Association="Self.FK_Ligne_cmd_Produit">
+      <End Role="Produit" EntitySet="Produit" />
+      <End Role="Ligne_cmd" EntitySet="Ligne_cmd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produit_Categorie" Association="Self.FK_Produit_Categorie">
+      <End Role="Categorie" EntitySet="Categorie" />
+      <End Role="Produit" EntitySet="Produit" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
